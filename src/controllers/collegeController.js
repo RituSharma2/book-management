@@ -34,7 +34,7 @@ const collegeCreate = async function (req, res) {
             return
         }
         let collegeCreate = await collegeModel.create(requestBody)
-        res.status(200).send({ status: true, data: collegeCreate })
+        res.status(201).send({ status: true, data: collegeCreate })
 
     } catch (error) {
         res.status(500).send({ status: false, msg: error })
@@ -48,14 +48,23 @@ const getAllIntern = async function (req, res) {
     try {
         let collegeName = req.query.collegeName;
         if (!collegeName) {
-            return res.status(400).send({ status: false, msg: "please provide college name in query params" })
+            return res.status(404).send({ status: false, msg: "please provide college name in query params" })
         }
-        let collegeDetail = await collegeModel.findOne({ name: collegeName })
+        let collegeDetail = await collegeModel.findOne({ name: collegeName, isDeleted: false }).select({ _id: 1, name: 1, fullName: 1, logoLink: 1 })
         console.log(collegeDetail)
         if (!collegeDetail) {
-            return res.status(400).send({ status: false, msg: "College name not found" })
+            return res.status(404).send({ status: false, msg: "College name not found" })
         }
-        let internDetail = await internModel.find({ collegeId: collegeDetail._id }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
+
+        let internDetail = await internModel.find({ collegeId: collegeDetail._id, isDeleted: false }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
+        if (internDetail.length === 0) {
+            return res.status(201).send({
+                status: true, msg: {
+                    ...collegeDetail.toObject(), interests: "intern Details not present"
+                }
+            })
+        }
+
         let result = {
             name: collegeDetail.name,
             fullName: collegeDetail.fullName,

@@ -54,17 +54,20 @@ const internCreate = async function (req, res) {
 
         const collegeId = await collegeModel.findOne({ name: requestBody.collegeName })
         if (!collegeId) {
-            res.status(400).send({ status: false, msg: 'college not found' })
-        } else {
-            const createIntern = {
-                name: req.body.name,
-                email: req.body.email,
-                mobile: req.body.mobile,
-                collegeId: collegeId._id
-            }
-            const internCreate = await internModel.create(createIntern)
-            res.status(200).send({ status: true, data: internCreate })
+            return res.status(400).send({ status: false, msg: 'college not found' })
         }
+        if (collegeId.isDeleted === true) {
+            return res.status(400).send({ status: false, msg: "college is deleted" })
+        }
+        const createIntern = {
+            name: req.body.name,
+            email: req.body.email,
+            mobile: req.body.mobile,
+            collegeId: collegeId._id
+        }
+        const internCreate = await internModel.create(createIntern)
+        res.status(201).send({ status: true, data: internCreate })
+
     } catch (error) {
         res.status(500).send({ status: false, msg: error })
     }
