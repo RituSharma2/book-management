@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController')
-const productController = require('../controllers/productController')
-const orderController = require('../controllers/orderController')
-const appMiddleware = require('../middlewares/appMiddleware')
+const collegeController = require('../controllers/collegeController')
+const internController = require('../controllers/internController')
 
-router.post('/users', appMiddleware.validateAppType, userController.createUser);
-router.post('/products', productController.createProduct);
-router.post('/orders', appMiddleware.validateAppType, orderController.createOrder);
+router.post('/functionup/colleges', collegeController.createCollege)
+
+router.post('/functionup/interns', internController.internCreate)
+
+//router.get('/functionup/collegeDetails',collegeController)
+
 
 module.exports = router;
