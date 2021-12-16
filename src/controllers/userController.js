@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 
 
-
+// VALIDATION
 const isValid = function (value) {
     if (typeof value === 'undefined' || value === null) return false
     if (typeof value === 'string' && value.trim().length === 0) return false
@@ -17,7 +17,7 @@ const isValidTitle = function (title) {
 }
 
 
-
+// USER CREATATION 
 const createUser = async function (req, res) {
     let requestBody = req.body;
     try {
@@ -27,7 +27,7 @@ const createUser = async function (req, res) {
             return
         }
 
-        const { name, title, email, phone, password,address,street,pincode,city } = requestBody
+        const { name, title, email, phone, password } = requestBody
 
         if (!isValid(title)) {
             res.status(400).send({ status: false, message: 'Title is required' })
@@ -79,28 +79,21 @@ const createUser = async function (req, res) {
             res.status(400).send({ status: false, message: `${email} email address is already registered` })
             return
         }
-        //const userData = {
-          //  title,
-           // name,
-           /// phone,
-           // email,
-           // password,
-           // address,
-           // street,
-          //// city,
-          //  pincode
-      //  }
-
-
+       
         let user = await userModel.create(req.body)
         res.status(201).send({ status: true, data: user })
-
     } catch (error) {
         res.status(500).send({ status: false, msg: error.message })
     }
 }
 
+
+
+
 //=========================================================================================================
+
+
+// LOGIN USER 
 const loginUser = async function (req, res) {
     try {
         const requestBody = req.body;
