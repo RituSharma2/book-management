@@ -1,5 +1,6 @@
+const { request } = require("express")
 const bookModel = require("../model/bookModel")
-const userModel =require('../model/userModel')
+const userModel = require('../model/userModel')
 
 
 
@@ -55,33 +56,36 @@ const createBook = async function (req, res) {
             res.status(400).send({ status: false, message: 'Book subcategory is required' })
             return
         }
-      //  if (!isValid(reviews)) {
-          //  res.status(400).send({ status: false, message: ' Please provide a valid Review between 1-5' })
-           // return
-       // }
+        //  if (!isValid(reviews)) {
+        //  res.status(400).send({ status: false, message: ' Please provide a valid Review between 1-5' })
+        // return
+        // }
         if (!isValid(releasedAt)) {
             res.status(400).send({ status: false, message: ' Please provide a valid ReleasedAt date' })
             return
         }
-        const user = await userModel.findById(userId);
-        if (!user) {
-            res.status(400).send({ status: false, message: `User does not exists` })
-            return
-        }
-        const bookData = {
-            title,
-            excerpt,
-            userId,
-            ISBN,
-            category,
-            subcategory,
-            reviews,
-            releasedAt,
-            isDeleted: isDeleted ? isDeleted : false,
-            deletedAt: isDeleted ? new Date() : null
-        }
-        const newBook = await bookModel.create(bookData)
-        res.status(201).send({ status: true, message: 'New book created successfully', data: newBook })
+       
+            const user = await userModel.findById(userId);
+            if (!user) {
+                res.status(400).send({ status: false, message: `User does not exists` })
+                return
+            }
+
+            const bookData = {
+                title,
+                excerpt,
+                userId,
+                ISBN,
+                category,
+                subcategory,
+                reviews,
+                releasedAt,
+                isDeleted: isDeleted ? isDeleted : false,
+                deletedAt: isDeleted ? new Date() : null
+            }
+            const newBook = await bookModel.create(bookData)
+            res.status(201).send({ status: true, message: 'New book created successfully', data: newBook })
+        
     } catch (error) {
         console.log(error)
         res.status(500).send({ status: false, message: error.message });

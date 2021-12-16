@@ -19,14 +19,15 @@ const isValidTitle = function (title) {
 
 
 const createUser = async function (req, res) {
+    let requestBody = req.body;
     try {
-        const requestBody = req.body;
+        
         if (!isValidRequestBody(requestBody)) {
             res.status(400).send({ status: false, message: 'Invalid request parameters. Please provide author details' })
             return
         }
 
-        const { name, title, email, phone, password } = requestBody
+        const { name, title, email, phone, password,address,street,pincode,city } = requestBody
 
         if (!isValid(title)) {
             res.status(400).send({ status: false, message: 'Title is required' })
@@ -78,6 +79,17 @@ const createUser = async function (req, res) {
             res.status(400).send({ status: false, message: `${email} email address is already registered` })
             return
         }
+        //const userData = {
+          //  title,
+           // name,
+           /// phone,
+           // email,
+           // password,
+           // address,
+           // street,
+          //// city,
+          //  pincode
+      //  }
 
 
         let user = await userModel.create(req.body)
@@ -114,10 +126,10 @@ const loginUser = async function (req, res) {
             res.status(401).send({ status: false, message: `Invalid login credentials` });
             return
         }
-        const token = await jwt.sign({
-            userId: user._id,
+        let payload = { _id: user._id }
+        let token = await jwt.sign(payload,
             //exp: Math.floor(Date.now() / 1000) + 10*60*60
-        }, '16th-Dec-Project-Books', { expiresIn: '30mins' })
+            '16th-Dec-Project-Books', { expiresIn: '30mins' })
         res.header('x-api-key', token);
         res.status(200).send({ status: true, message: `User logged in successfully`, data: { token } });
     } catch (error) {
