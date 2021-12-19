@@ -40,7 +40,8 @@ const bookSchema = new mongoose.Schema({
         //comment: Holds number of reviews of this book
     },
     deletedAt: {
-        type: Date,
+        type: String,
+        default:null
         //when the document is deleted
     },
     isDeleted: {
@@ -48,7 +49,7 @@ const bookSchema = new mongoose.Schema({
         default: false
     },
     releasedAt: {
-        type: Date,
+        type: String,
         required: true,// format("YYYY-MM-DD")
     },
 

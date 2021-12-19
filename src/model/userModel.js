@@ -27,15 +27,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-
         unique: true
+        
     },
     password: {
         type: String,
         required: true,
         trim: true,
-        minLen: 8,
-        maxLen: 15
+        minLen: [8, "Password length should not be less than 8"],
+        maxLen: [15, "Password length should not be greater than 15"]
     },
     address: {
         street: {
