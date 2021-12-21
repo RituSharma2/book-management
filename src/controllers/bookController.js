@@ -24,12 +24,13 @@ const isValidObjectId = function (objectId) {
 //======================================================================================================
 const createBook = async function (req, res) {
     try {
+        res.setHeader('Access-Control-Allow-Origin','*')
         const requestBody = req.body;
         if (!isValidRequestBody(requestBody)) {
             res.status(400).send({ status: false, message: 'Invalid request parameters. Please provide blog details' })
             return
         }
-        const { title, excerpt, userId, ISBN, category, subcategory, reviews, isDeleted, releasedAt } = requestBody;
+        const { title, excerpt, userId, ISBN, category, subcategory, reviews, isDeleted, releasedAt,bookCover } = requestBody;
         if (!isValid(title)) {
             res.status(400).send({ status: false, message: 'Book Title is required' })
             return
@@ -88,6 +89,7 @@ const createBook = async function (req, res) {
             excerpt,
             userId,
             ISBN,
+            bookCover,
             category,
             subcategory,
             reviews,

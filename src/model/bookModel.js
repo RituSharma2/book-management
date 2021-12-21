@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { required } = require('nodemon/lib/config');
 const bookSchema = new mongoose.Schema({
 
     title: {
@@ -6,6 +7,10 @@ const bookSchema = new mongoose.Schema({
         required: true,
         trim:true,
         unique: true
+    },
+    bookCover:{
+        type:String,
+        required:true,
     },
     excerpt: {
         type: String,

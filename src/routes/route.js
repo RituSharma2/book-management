@@ -5,6 +5,7 @@ const router = express.Router();
 const userController = require('../controllers/userController')
 const bookController = require('../controllers/bookController')
 const mid1 = require('../middleware/tokenAuth')
+const s3File=require('../AWS/s3Files')
 
 
 //POST FOR USER
@@ -12,6 +13,9 @@ router.post('/register', userController.createUser)
 
 //POST FOR LOGIN USER
 router.post('/login', userController.loginUser)
+
+//POST for book cover
+router.post("/write-file-aws",s3File.upload)
 
 //POST FOR BOOK
 router.post('/books', mid1.mid1, bookController.createBook)
