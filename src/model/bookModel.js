@@ -1,42 +1,42 @@
 const mongoose = require('mongoose');
-const { required } = require('nodemon/lib/config');
+//const { required } = require('nodemon/lib/config');
 const bookSchema = new mongoose.Schema({
 
     title: {
         type: String,
         required: true,
-        trim:true,
+        trim: true,
         unique: true
     },
-    bookCover:{
-        type:String,
-        required:true,
+    bookCover: {
+        type: String,
+        required: true,
     },
     excerpt: {
         type: String,
-        trim:true,
+        trim: true,
         required: true
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        trim:true,
+        trim: true,
         refs: 'user'
     },
     ISBN: {
         type: String,
         requireed: true,
-        trim:true,
+        trim: true,
         unique: true
     },
     category: {
         type: String,
-        trim:true,
+        trim: true,
         required: true
     },
     subcategory: {
         type: String,
-        trim:true,
+        trim: true,
         required: true
     },
     reviews: {
@@ -46,7 +46,7 @@ const bookSchema = new mongoose.Schema({
     },
     deletedAt: {
         type: String,
-        default:null
+        default: null
         //when the document is deleted
     },
     isDeleted: {

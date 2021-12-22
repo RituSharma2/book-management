@@ -5,13 +5,13 @@ const reviewSchema = new mongoose.Schema({
     bookId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        trim:true,
+        trim: true,
         refs: 'Book'
     },
     reviewedBy: {
         type: String,
         required: true,
-        trim:true,
+        trim: true,
         default: 'Guest',
         //value: reviewer's name
     },
@@ -21,13 +21,13 @@ const reviewSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        enum:[1,2,3,4,5],
+        enum: [1, 2, 3, 4, 5],
         required: true
     },
     review: {
         type: String,
-        trim:true,
-        optional:true,
+        trim: true,
+        optional: true,
 
     },
     isDeleted: {

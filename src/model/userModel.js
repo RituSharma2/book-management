@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
-//const validator = require("validator")
 const userSchema = new mongoose.Schema({
+
     title: {
         type: String,
         required: true,
@@ -16,11 +16,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        validate: {
-            validator: function (phone) {
-                return /^[6-9]\d{9}$/gi.test(phone)
-            }, message: 'Please fill a valid mobile number', isAsync: false
-        },
         unique: true,
     },
     email: {
@@ -28,7 +23,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         unique: true
-        
+
     },
     password: {
         type: String,

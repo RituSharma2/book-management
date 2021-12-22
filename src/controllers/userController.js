@@ -21,7 +21,7 @@ const isValidTitle = function (title) {
 const createUser = async function (req, res) {
     let requestBody = req.body;
     try {
-        
+
         if (!isValidRequestBody(requestBody)) {
             res.status(400).send({ status: false, message: 'Invalid request parameters. Please provide author details' })
             return
@@ -79,7 +79,7 @@ const createUser = async function (req, res) {
             res.status(400).send({ status: false, message: `${email} email address is already registered` })
             return
         }
-       
+
         let user = await userModel.create(req.body)
         res.status(201).send({ status: true, data: user })
     } catch (error) {
