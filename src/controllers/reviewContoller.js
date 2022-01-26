@@ -17,58 +17,8 @@ const isValidRequestBody = function (requestBody) {
     return Object.keys(requestBody).length > 0
 }
 
-//=======================================================================================================
-const createReview = async function (req, res) {
-    try {
-        const requestBody = req.body;
-        if (!isValidRequestBody(requestBody)) {
-            return res.status(400).send({ status: false, message: 'Invalid request parameters. Please provide blog details' })
-
-        }
-        const { bookId, reviewedBy, reviewedAt, rating } = requestBody;
 
 
-        if (!isValid(bookId)) {
-            return res.status(400).send({ status: false, message: 'bookId is required' })
-
-        }
-        if (!isValid(reviewedBy)) {
-            return res.status(400).send({ status: false, message: `name is required` })
-
-        }
-
-        if (!isValid(reviewedAt)) {
-            return res.status(400).send({ status: false, message: 'date is required' })
-
-        }
-        if (!isValid(rating)) {
-            return res.status(400).send({ status: false, message: ' Please provide a valid rating between 1-5' })
-
-        }
-
-        const user = await bookModel.findById(bookId);
-        if (!user) {
-            return res.status(400).send({ status: false, message: `book does not exists` })
-
-        }
-
-        const reviewData = {
-            bookId,
-            reviewedBy,
-            reviewedAt,
-            rating,
-            review,
-            isDeleted: isDeleted ? isDeleted : false,
-
-        }
-        const newReview = await reviewModel.create(reviewData)
-        res.status(201).send({ status: true, message: 'review created successfully', data: newReview })
-    } catch (error) {
-        console.log(error)
-        res.status(500).send({ status: false, message: error.message });
-    }
-}
-module.exports.createReview = createReview
 
 //===========================================================================================================
 
